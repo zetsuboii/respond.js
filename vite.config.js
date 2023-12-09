@@ -13,6 +13,4 @@ export default defineConfig({
         emptyOutDir: true,
         sourcemap: true,
     },
-
-    mode: "development",
 });
