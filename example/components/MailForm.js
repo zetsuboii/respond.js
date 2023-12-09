@@ -11,7 +11,8 @@ import {
 const formState = createState({ mail: "", password: "" });
 
 const MailState = p({
-    innerText: reactive(formState, (state) => {
+    id: "mail-state",
+    innerText: reactive(formState, ([state]) => {
         if (state.submitted) return "Submitted!";
         else return "Please enter your mail";
     }),

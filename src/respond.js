@@ -1,8 +1,11 @@
 export * from "./components.js";
 export * from "./state.js";
 
-export const createComponent = (component) => {
-    const [element, children] = component;
+import { RespondChildren } from "./components.js";
+
+/** @param {HTMLElement} element */
+export const createComponent = (element) => {
+    const children = element[RespondChildren];
     if (children == undefined) return element;
 
     for (const child of children) {

@@ -12,13 +12,13 @@ const nameState = createState({ name: "" });
 const NameText = p({
     innerText: reactive(
         nameState,
-        (state) => `${state.name} ${state.name.length}`
+        ([state]) => `${state.name} ${state.name.length}`
     ),
 });
 
 const NameInput = input({
     placeholder: "Enter your name",
-    value: reactive(nameState, (state) => state.name),
+    value: reactive(nameState, ([state]) => state.name),
     oninput: (event) => {
         getState(nameState).name = event.target.value;
     },

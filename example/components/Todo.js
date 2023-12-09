@@ -27,7 +27,7 @@ const TodoItem = (todo) =>
     ]);
 
 const TodoList = div(
-    reactiveChildren(todoState, (state) =>
+    reactiveChildren(todoState, ([state]) =>
         state.todos.map((todo) => TodoItem(todo))
     )
 );

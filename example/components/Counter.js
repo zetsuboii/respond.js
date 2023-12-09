@@ -10,13 +10,13 @@ import {
 const counterState = createState({ count: 0 });
 
 const CounterText = p({
-    innerText: reactive(counterState, (state) => state.count),
+    innerText: reactive(counterState, ([state]) => state.count),
 });
 
 const IncrementButton = button({
     innerText: reactive(
         counterState,
-        (state) => `Increment to ${state.count + 1}`
+        ([state]) => `Increment to ${state.count + 1}`
     ),
     onclick: () => {
         getState(counterState).count++;
