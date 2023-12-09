@@ -8,8 +8,8 @@ Respond is a single page application library, written in 200 LOC.
 - Native HTML APIs: No custom syntax or DSL, just plain JavaScript
 
 ## Installation
-Just copy `respond/index.es.js` into your project.
-To run the development server, run `bun --watch server.js`.
+Just build the project with `yarn build` and copy `respond/index.es.js` into your project.
+To run the development server, run `yarn dev`.
 
 ## Example: Counter App
 ```js
