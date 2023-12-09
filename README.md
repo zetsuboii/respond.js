@@ -62,7 +62,7 @@ const TodoList = div(
 const TodoInput = input({
     oninput: (event) => {
         const value = event.target.value;
-        if (event.key === "Enter" && value) {
+        if (value != undefined) {
             getState(todoState).todos.push(value);
             event.target.value = "";
         }
