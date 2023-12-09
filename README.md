@@ -25,7 +25,7 @@ import {
 const counterState = createState({ count: 0 });
 
 const CounterText = p({
-    innerText: reactive(counterState, (state) => state.count),
+    innerText: reactive(counterState, ([state]) => state.count),
 });
 
 const IncrementButton = button({
@@ -55,7 +55,7 @@ const todoState = createState({ todos: [] });
 const TodoList = div(
     reactiveChildren(
         todoState, 
-        (state) => state.todos.map((todo) => p({ innerText: todo }))
+        ([state]) => state.todos.map((todo) => p({ innerText: todo }))
     )
 );
 

@@ -1,4 +1,4 @@
-import { Name, Counter, Todo } from "./components/index.js";
+import { Name, Counter, Todo, MailForm } from "./components/index.js";
 import * as Respond from "./respond/index.es.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
         Header,
         withHeader("Counter", Counter),
         withHeader("Text Input", Name),
+        withHeader("Mail Form", MailForm),
         withHeader("Todo List", Todo),
     ]);
 });

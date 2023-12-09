@@ -86,14 +86,14 @@ export function createState(initial) {
 export const ReactiveSymbol = Symbol("Reactive");
 export const ReactiveChildren = Symbol("ReactiveChildren");
 
-export const reactive = (tag, getValue) => ({
+export const reactive = (tags, getValue) => ({
     [ReactiveSymbol]: true,
-    tag,
+    tags: Array.isArray(tags) ? tags : [tags],
     getValue,
 });
 
-export const reactiveChildren = (tag, getChildren) => ({
+export const reactiveChildren = (tags, getChildren) => ({
     [ReactiveChildren]: true,
-    tag,
+    tags: Array.isArray(tags) ? tags : [tags],
     getChildren,
 });

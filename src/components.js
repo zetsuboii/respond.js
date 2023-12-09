@@ -7,6 +7,8 @@ import { createComponent } from "./respond.js";
 import { ReactiveChildren, ReactiveSymbol } from "./state.js";
 import { getState } from "./state.js";
 
+export const RespondChildren = Symbol("RespondChildren");
+
 /**
  * Converts CSS object to string
  * @param {CSSStyleDeclaration} style
@@ -29,7 +31,7 @@ const getStyle = (style) => {
  * @param {string} name
  * @param {HTMLElement} props
  * @param {HTMLElement[]} children
- * @returns {[HTMLElement, HTMLElement[]]}
+ * @returns {HTMLElement}
  */
 function generateComponent(name, props, children) {
     const element = document.createElement(name);
@@ -51,13 +53,16 @@ function generateComponent(name, props, children) {
 
     for (const key in props) {
         if (props[key][ReactiveSymbol]) {
-            const { tag, getValue } = props[key];
+            const { tags, getValue } = props[key];
 
-            element[key] = getValue(getState(tag));
-            element.addEventListener(`state::${tag}`, () => {
-                element[key] = getValue(getState(tag));
+            element[key] = getValue(tags.map(getState));
+
+            tags.forEach((tag) => {
+                element.addEventListener(`state::${tag}`, () => {
+                    element[key] = getValue(tags.map(getState));
+                });
+                subscribeToState(tag, element.id);
             });
-            subscribeToState(tag, element.id);
             continue;
         }
 
@@ -70,18 +75,21 @@ function generateComponent(name, props, children) {
     }
 
     if (!Array.isArray(children) && children?.[ReactiveChildren]) {
-        const { tag, getChildren } = children;
+        const { tags, getChildren } = children;
 
-        children = getChildren(getState(tag));
-        element.addEventListener(`state::${tag}`, () => {
-            element.replaceChildren(
-                ...getChildren(getState(tag)).map(createComponent)
-            );
+        children = getChildren(tags.map(getState));
+        tags.forEach((tag) => {
+            element.addEventListener(`state::${tag}`, () => {
+                element.replaceChildren(
+                    ...getChildren(tags.map(getState)).map(createComponent)
+                );
+            });
+            subscribeToState(tag, element.id);
         });
-        subscribeToState(tag, element.id);
     }
 
-    return [element, children];
+    element[RespondChildren] = children;
+    return element;
 }
 
 /** @param {HTMLButtonElement} props @param {HTMLElement[]} children */
@@ -123,4 +131,3 @@ export function h3(props, children) {
 export function h4(props, children) {
     return generateComponent("h4", props, children);
 }
-
